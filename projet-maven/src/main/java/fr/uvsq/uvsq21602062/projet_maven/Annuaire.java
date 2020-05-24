@@ -1,6 +1,7 @@
 package fr.uvsq.uvsq21602062.projet_maven;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Classe représentant l'annuaire de l'organisation.
@@ -11,48 +12,82 @@ public class Annuaire {
 	/**
 	 * Attribut liste stockant les groupes d'employé par leur hierarchie.
 	 */
-	private ArrayList<CompositePersonnel> listeGroupe;
+	private ArrayList<CompositePersonnel> listeGroupeHierarchie;
+	
+	/**
+	 * Attribut liste stockant les groupes d'employé par leur fonction.
+	 */
+	private ArrayList<CompositePersonnel> listeGroupeFonction;
 
 	/**
 	 * Constructeur
 	 */
 	public Annuaire() {
-		this.listeGroupe = new ArrayList<CompositePersonnel>();
+		this.listeGroupeFonction = new ArrayList<CompositePersonnel>();
+		this.listeGroupeHierarchie = new ArrayList<CompositePersonnel>();
 	}
 	
 	/**
-	 * Méthode permettant d'ajouter un personnel dans la liste en indiquant son niveau de hierarchie
+	 * Méthode permettant d'ajouter un personnel dans les liste en indiquant son niveau de hierarchie
 	 */
 	public void ajouter(Personnel p, int niveau) {
+		// Ajout dans la liste groupé par hierarchie
 		try {
-			this.listeGroupe.get(niveau).ajouter(p);
+			this.listeGroupeHierarchie.get(niveau).ajouter(p);
 		}
 		catch(IndexOutOfBoundsException e) {
 			CompositePersonnel nouveauGroupe = new CompositePersonnel();
 			nouveauGroupe.ajouter(p);
-			this.listeGroupe.add(nouveauGroupe);
+			this.listeGroupeHierarchie.add(nouveauGroupe);
 		}
+		// Ajout dans la liste groupé par fonction
+		boolean succes = false;
+		for (int i = 0; i<this.listeGroupeFonction.size() && !succes; i++) {
+			if(this.listeGroupeFonction.get(i).obtenir().getFonction() == p.getFonction()) {
+				this.listeGroupeFonction.get(i).ajouter(p);
+				succes = true;
+			}
+		}
+		if(!succes) {
+			CompositePersonnel nouveauGroupe = new CompositePersonnel();
+			nouveauGroupe.ajouter(p);
+			this.listeGroupeFonction.add(nouveauGroupe);
+		}
+		
 	}
 	
 	/**
-	 * Get de l'attribut listeGroupe
+	 * Get des listes
 	 * @return
 	 */
-	public ArrayList<CompositePersonnel> getListGroupe(){
-		return listeGroupe;
+	public ArrayList<CompositePersonnel> getListGroupeHierarchie(){
+		return listeGroupeHierarchie;
+	}
+	public ArrayList<CompositePersonnel> getListGroupeFonction(){
+		return listeGroupeFonction;
 	}
 	
 	/**
 	 * Méthode permettant d'afficher les personnels groupés par leur fonction
 	 */
 	public void afficherParFonction() {
-		
+		CompositePersonnel compoP;
+		for(Iterator<CompositePersonnel> i = this.listeGroupeFonction.iterator(); i.hasNext();) {
+			compoP = i.next();
+			compoP.afficher();
+			System.out.println();
+		}
 	}
 	
 	/**
 	 * Méthode permettant d'afficher les personnels groupés par leur hierarchie
 	 */
 	public void afficherParHierarchie() {
-		
+		CompositePersonnel compoP;
+		for(Iterator<CompositePersonnel> i = this.listeGroupeHierarchie.iterator(); i.hasNext();) {
+			compoP = i.next();
+			compoP.afficher();
+			System.out.println();
+		}
 	}
 }

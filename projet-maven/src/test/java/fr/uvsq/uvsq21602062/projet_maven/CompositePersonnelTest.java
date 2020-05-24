@@ -28,5 +28,19 @@ public class CompositePersonnelTest {
 		pComp.ajouter(p2);
 		assertTrue(pComp.obtenir("Dupont", "François").getFonction() == "Chef de groupe");
 	}
+	
+	@Test
+	public void testObtenir() {
+		Personnel p1 = new Personnel
+				.Builder("Dupont", "François")
+				.dateNaissance(LocalDate.now())
+				.fonction("Chef de groupe")
+				.numeroTel("0678905676")
+				.build();
+		
+		CompositePersonnel pComp = new CompositePersonnel();
+		pComp.ajouter(p1);
+		assertTrue(pComp.obtenir().getFonction() == "Chef de groupe");
+	}
 
 }

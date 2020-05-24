@@ -1,6 +1,7 @@
 package fr.uvsq.uvsq21602062.projet_maven;
 
 import java.util.ArrayList;
+import java.util.Iterator;
 
 /**
  * Classe utilisant le patern de conception Composite
@@ -37,5 +38,26 @@ public class CompositePersonnel {
 				return this.listePersonnel.get(i);
 		}
 		return null;
+	}
+	
+	/**
+	 * Méthode permettant d'obtenir le premier Personnel de la liste
+	 */
+	public Personnel obtenir() {
+		if(this.listePersonnel.size() == 0)
+			return null;
+		else
+			return this.listePersonnel.get(0);
+	}
+	
+	/**
+	 * Méthode permettant d'afficher les personnels
+	 */
+	public void afficher() {
+		Personnel p;
+		for(Iterator<Personnel> i = this.listePersonnel.iterator(); i.hasNext();) {
+			p = i.next();
+			p.afficher();
+		}
 	}
 }

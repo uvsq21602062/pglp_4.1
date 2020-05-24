@@ -122,4 +122,11 @@ public final class Personnel {
 	public String getNumeroTel() {
 		return this.numeroTel;
 	}
+	
+	/**
+	 * Méthode affichant un personnel
+	 */
+	public void afficher() {
+		System.out.println(this.fonction + " " + this.nom + " " + this.prenom + " " + this.dateNaissance.toString() + " " + this.numeroTel);
+	}
 }

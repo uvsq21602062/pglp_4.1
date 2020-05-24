@@ -1,5 +1,7 @@
 package fr.uvsq.uvsq21602062.projet_maven;
 
+import java.time.LocalDate;
+
 /**
  * Application prncipal reposant sur le patern singleton.
  * @author jean
@@ -29,7 +31,33 @@ public class AppSingleton {
 	
 	public void run() {
 		System.out.println("Bonjour");
+		Annuaire a = new Annuaire();
+		Personnel p1 = new Personnel
+				.Builder("Dupont", "François")
+				.dateNaissance(LocalDate.now())
+				.fonction("Chef de groupe")
+				.numeroTel("0678905676")
+				.build();
+		Personnel p2 = new Personnel
+				.Builder("Dupuit", "Alain")
+				.dateNaissance(LocalDate.now())
+				.fonction("Assistant")
+				.numeroTel("0645457886")
+				.build();
+		Personnel p3 = new Personnel
+				.Builder("Dubois", "Jean")
+				.dateNaissance(LocalDate.now())
+				.fonction("Assistant")
+				.numeroTel("0600343321")
+				.build();
 		
+		a.ajouter(p1, 0);
+		a.ajouter(p2, 1);
+		a.ajouter(p3, 2);
+		System.out.println("Affichage par fonction : \n");
+		a.afficherParFonction();
+		System.out.println("Affichage par hierarchie : \n");
+		a.afficherParHierarchie();
 		System.out.println("Au revoir");
 	}
 	
